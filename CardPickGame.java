@@ -57,10 +57,7 @@ class CardPickGame {
     }
 
     private boolean judgeCard(int getCardResult) {
-        if (getCardResult >= 11) {
-            return true;
-        } else {
-            return false;
-        }
+        return (getCardResult >= 11) ? true : false;
+        // 三項演算子：条件 ? trueの時の処理 : falseの時の処理;
     }
 }
