@@ -2,7 +2,7 @@ import java.util.List;
 import java.util.Arrays;
 import java.util.ArrayList;
 
-class CardPickGame {
+public class CardPickGame {
     private int maxBetCoin = 100;//最大ベット枚数
     private int deckSetCount = 2;//カードセット数
     private int possessionCoin;//所持コイン数
@@ -11,9 +11,48 @@ class CardPickGame {
         this.possessionCoin = possessionCoin;
     }
 
-    public void execute() {
-        int userNumSum = getCard();
-        System.out.println(judgeCard(userNumSum));
+    public int execute() {
+        //getCard();
+        //boolean result = judgeCard(getCard());
+        if (possessionCoin <= 0) {
+            return possessionCoin;
+        } else {
+            System.out.println("You have " + possessionCoin + " Coin, Start the game? y / n");
+            while(true) {
+                switch(GameUtils.getInputString()) {
+                    case "y":
+                        int limitCoin;
+                        int betCoin;
+                        while(true) {
+                            if(possessionCoin < maxBetCoin) {
+                                limitCoin = possessionCoin;
+                            } else {
+                                limitCoin = maxBetCoin;
+                            }
+                            System.out.println("Please bet Coin 1 ~ " + limitCoin);
+                            betCoin = GameUtils.getInputInt();
+                            if (betCoin > 0 || betCoin >= maxBetCoin) {
+                                possessionCoin = possessionCoin - betCoin;
+                                boolean result = judgeCard(getCard());
+                                if (result == true) {
+                                    possessionCoin = possessionCoin + (betCoin * 2);
+                                    System.out.println("You Win! Get " + (betCoin * 2) + " Coin!");
+                                    System.out.println("You got " + (betCoin * 2) + " Coin !!");
+                                } else {
+                                    System.out.println("You lose");
+                                }
+                                execute();
+                            } else {
+                                continue;
+                            }
+                        }
+                    case "n":
+                        return possessionCoin;
+                    default:
+                        System.out.println("Please enter y or n.");
+                }
+            }
+        }
     }
 
     private int getCard() {
@@ -50,9 +89,7 @@ class CardPickGame {
         // randNumA2：サブリストのキー番号
         int cardB = setDeck.get(randNumB1).get(randNumB2);
         int userNumSum = cardA + cardB;
-
         System.out.println("Cards drawn are " + cardA + " and " + cardB + ", total is " + userNumSum + ".");
-
         return userNumSum;
     }
 
