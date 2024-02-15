@@ -12,7 +12,8 @@ class CardPickGame {
     }
 
     public void execute() {
-        getCard();
+        int userNumSum = getCard();
+        System.out.println(judgeCard(userNumSum));
     }
 
     private int getCard() {
@@ -55,4 +56,11 @@ class CardPickGame {
         return userNumSum;
     }
 
+    private boolean judgeCard(int getCardResult) {
+        if (getCardResult >= 11) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
