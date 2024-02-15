@@ -1,9 +1,9 @@
 public class ExeTest {
     public static void main(String[] args) {
-        String inputString = GameUtils.getInputString();
+        //String inputString = GameUtils.getInputString();
         // inputString：出力するために定義する
         // GameUtils：クラスを利用してメソッドを呼び出す（インスタンス生成不要）
-        int inputInt = GameUtils.getInputInt();
+        //int inputInt = GameUtils.getInputInt();
         //int randomInt = GameUtils.getRandomInt(11);
         //boolean result = GameUtils.checkPattern("test");
         //System.out.println(inputString);

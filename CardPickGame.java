@@ -12,45 +12,50 @@ public class CardPickGame {
     }
 
     public int execute() {
-        //getCard();
-        //boolean result = judgeCard(getCard());
-        if (possessionCoin <= 0) {
-            return possessionCoin;
-        } else {
-            System.out.println("You have " + possessionCoin + " Coin, Start the game? y / n");
-            while(true) {
-                switch(GameUtils.getInputString()) {
-                    case "y":
-                        int limitCoin;
-                        int betCoin;
-                        while(true) {
-                            if(possessionCoin < maxBetCoin) {
-                                limitCoin = possessionCoin;
-                            } else {
-                                limitCoin = maxBetCoin;
-                            }
-                            System.out.println("Please bet Coin 1 ~ " + limitCoin);
-                            betCoin = GameUtils.getInputInt();
-                            if (betCoin > 0 || betCoin >= maxBetCoin) {
-                                possessionCoin = possessionCoin - betCoin;
-                                boolean result = judgeCard(getCard());
-                                if (result == true) {
-                                    possessionCoin = possessionCoin + (betCoin * 2);
-                                    System.out.println("You Win! Get " + (betCoin * 2) + " Coin!");
-                                    System.out.println("You got " + (betCoin * 2) + " Coin !!");
-                                } else {
-                                    System.out.println("You lose");
-                                }
-                                execute();
-                            } else {
-                                continue;
-                            }
-                        }
-                    case "n":
-                        return possessionCoin;
-                    default:
-                        System.out.println("Please enter y or n.");
+
+        while (true) {
+            if (possessionCoin <= 0) {
+                return possessionCoin;
+            }
+            while (true) {
+                System.out.println("You have " + possessionCoin + " Coin, Start the game? y / n");
+                String startValue = GameUtils.getInputString();
+                if (startValue.equals("y")) {
+                // equals()：文字列の比較演算子
+                    break;
+                } else if (startValue.equals("n")) {
+                    return this.possessionCoin;
+                } else {
+                    System.out.println("Please enter y or n.");
                 }
+            }
+
+            int ableBetCoin = Math.min(this.maxBetCoin, this.possessionCoin);
+            // Math.min()：与えられた引数のうち小さい方の値を返す
+            System.out.println("Please bet Coin 1 ~ " + ableBetCoin);
+
+            int userBetCoin = 0;
+            while (true) {
+                userBetCoin = GameUtils.getInputInt();
+                if (userBetCoin > 0 && userBetCoin <= ableBetCoin) {
+                    break;
+                }
+            }
+            this.possessionCoin -= userBetCoin;
+
+            int userCard = this.getCard();
+            boolean isWinner = this.judgeCard(userCard);
+            int getCoin = 0;
+            if (isWinner) { //trueの場合のみ実行される
+                getCoin = userBetCoin * 2;
+                System.out.println("You Win! Get " + getCoin + "Coin!");
+                this.possessionCoin += getCoin;
+            }
+            if (getCoin == 0) {
+                System.out.println("You lose");
+            }
+            if (getCoin >= 1) {
+                System.out.println("You got " + getCoin + "Coin !!");
             }
         }
     }
