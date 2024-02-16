@@ -18,7 +18,7 @@ public class HighAndLowGame {
         getCard(cardList);// カードのリストを取得しcardListに追加
         System.out.println(cardList);
 
-        cardList = getCard(cardList);
+        getCard(cardList);
         System.out.println(cardList);
         boolean result = judgeCard(cardList, true); // 第二引数は「High」を選択した状態
         System.out.println(result);
@@ -57,19 +57,18 @@ public class HighAndLowGame {
     }
 
     private boolean judgeCard(List<Integer> cardList, boolean pickChoice) {
-        int cardA = cardList.size() - 1;
-        int cardB = cardList.size() - 2;
+        int num = cardList.size();
+        int lastCard = cardList.get(num - 1);
+        int penultimateCard = cardList.get(num - 2);
+        // penultimate：最後から二番目
 
-        if (cardA == cardB) {
+        if (lastCard == penultimateCard) {
             return false;
-        } else if (cardA > cardB && pickChoice) {
-            return true;
-        } else if (cardA > cardB && !pickChoice) {
-            return false;
-        } else if (cardA < cardB && pickChoice) {
-            return false;
-        } else {
+        }
+        boolean flg = (lastCard > penultimateCard) ? true : false;
+        if (pickChoice == flg) {
             return true;
         }
+        return false;
     }
 }
