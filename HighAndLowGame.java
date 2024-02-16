@@ -17,6 +17,11 @@ public class HighAndLowGame {
         List<Integer> cardList = new ArrayList<Integer>();
         getCard(cardList);// カードのリストを取得しcardListに追加
         System.out.println(cardList);
+
+        cardList = getCard(cardList);
+        System.out.println(cardList);
+        boolean result = judgeCard(cardList, true); // 第二引数は「High」を選択した状態
+        System.out.println(result);
     }
 
     private List<Integer> getCard(List<Integer> cardList) {
@@ -49,5 +54,22 @@ public class HighAndLowGame {
         int showValue = cardList.get(lastIdx);
         System.out.println("pick card --" + showValue + "--");
         return cardList;
+    }
+
+    private boolean judgeCard(List<Integer> cardList, boolean pickChoice) {
+        int cardA = cardList.size() - 1;
+        int cardB = cardList.size() - 2;
+
+        if (cardA == cardB) {
+            return false;
+        } else if (cardA > cardB && pickChoice) {
+            return true;
+        } else if (cardA > cardB && !pickChoice) {
+            return false;
+        } else if (cardA < cardB && pickChoice) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }
