@@ -13,6 +13,5 @@ public class ExeTest {
         //CardPickGame cardPickGame = new CardPickGame(100);
         //cardPickGame.execute();
         HighAndLowGame highAndLowGame = new HighAndLowGame(1, 1);
-        //highAndLowGame.execute();
     }
 }

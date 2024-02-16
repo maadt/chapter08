@@ -13,15 +13,58 @@ public class HighAndLowGame {
         this.execute();
     }
 
-    public void execute() {
-        List<Integer> cardList = new ArrayList<Integer>();
-        getCard(cardList);// カードのリストを取得しcardListに追加
-        System.out.println(cardList);
+    public int execute() {
+        while (true) {
+            if (earnedCoinCount > maxWinCoin) {
+            return earnedCoinCount;
+            }
+            while (true) {
+                System.out.println("Your winCoin is " + earnedCoinCount);
+                System.out.println("Playing High And Low ? y / n");
+                String startValue = GameUtils.getInputString();
+                if (startValue.equals("y")) {
+                    break;
+                } else if (startValue.equals("n")) {
+                    return this.earnedCoinCount;
+                } else {
+                    System.out.println("Input error...Please retype!");
+                }
+            }
 
-        getCard(cardList);
-        System.out.println(cardList);
-        boolean result = judgeCard(cardList, true); // 第二引数は「High」を選択した状態
-        System.out.println(result);
+            boolean choice;
+            while (true) {
+                System.out.println("High or Low ? h / l");
+                String startValue = GameUtils.getInputString();
+                if (startValue.equals("h")) {
+                    choice = true;
+                    break;
+                } else if (startValue.equals("l")) {
+                    choice = false;
+                    break;
+                } else {
+                    System.out.println("Input error...Please retype!");
+                }
+            }
+
+            List<Integer> cardList = new ArrayList<Integer>();
+            for (int i = 0; i < deckSetCount * 2; i++) {
+                getCard(cardList);
+            }
+            boolean result = judgeCard(cardList, choice);
+
+            if (result == true) {
+                earnedCoinCount *= 2;
+            } else {
+                earnedCoinCount = 0;
+            }
+
+            if (earnedCoinCount == 0) {
+                return 0;
+            } else {
+                System.out.println("You got " + earnedCoinCount + " Coin !!");
+                execute();
+            }
+        }
     }
 
     private List<Integer> getCard(List<Integer> cardList) {
@@ -34,8 +77,8 @@ public class HighAndLowGame {
 
         int cardA;
         while (true) {
-            int randNumA1 = GameUtils.getRandomInt(2);
-            int randNumA2 = GameUtils.getRandomInt(10);
+            int randNumA1 = GameUtils.getRandomInt(deckSetCount);
+            int randNumA2 = GameUtils.getRandomInt(onePair.size());
             cardA = setDeck.get(randNumA1).get(randNumA2);
 
             int count = 0;
