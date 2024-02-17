@@ -7,10 +7,11 @@ public class HighAndLowGame {
     private int maxWinCoin = 10000;//最大獲得コイン数
     private int deckSetCount;//カードセット数
 
-    public HighAndLowGame(int earnedCoinCount, int deckSetCount) {
+    public int highAndLowGame(int earnedCoinCount, int deckSetCount) {
         this.earnedCoinCount = earnedCoinCount;
         this.deckSetCount = deckSetCount;
-        this.execute();
+        earnedCoinCount = this.execute();
+        return earnedCoinCount;
     }
 
     public int execute() {
