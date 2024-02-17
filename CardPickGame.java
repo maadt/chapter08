@@ -50,10 +50,9 @@ public class CardPickGame {
                 getCoin = userBetCoin * 2;
                 System.out.println("You Win! Get " + getCoin + "Coin!");
                 this.possessionCoin += getCoin;
-                HighAndLowGame highAndLowGame = new HighAndLowGame();
-                int earnedCoinCount = highAndLowGame.highAndLowGame(possessionCoin, 1);
-                int totalEarnedCoin = possessionCoin + earnedCoinCount;
-                return totalEarnedCoin;
+                HighAndLowGame highAndLowGame = new HighAndLowGame(getCoin, this.deckSetCount);
+                getCoin = highAndLowGame.execute();
+                this.possessionCoin += getCoin;
             }
             if (getCoin == 0) {
                 System.out.println("You lose");
